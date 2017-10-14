@@ -2,9 +2,22 @@
 define(function(){
 
     var lib = {
-        linear : function(x){ return x; },
-        sigmoid : function(x){ return (1 / (1 + Math.pow(Math.E, -1 * x))); },
-        hyperb_tan : function(x){  return (Math.pow(Math.E, 2 * x) - 1) / (Math.pow(Math.E, 2 * x) + 1); }
+        activation : {
+            indent : function(x){ return x; }, /* -inf +inf */
+            indent_bend : function(x){ return ((Math.sqrt(Math.pow(x, 2) + 1) - 1) / 2) + x; }, /* -inf +inf */
+            softstep : function(x){ return (1 / (1 + Math.pow(Math.E, -1 * x))); }, /* 0 1 */
+            softsign : function(x){ return x / (1 + Math.abs(x)) }, /* -1 1 */
+            softplus : function(x){ return Math.log(1 + Math.pow(Math.E, x)); },
+            hyperb_tan : function(x){  return (Math.pow(Math.E, 2 * x) - 1) / (Math.pow(Math.E, 2 * x) + 1); }, /* -inf +inf */
+            binary : function(x){ x < 0 ? 0 : 1 }, /* 0,1 */
+            relu : function(x){ return x < 0 ? 0 : x },
+            relu_l : function(x){ return x < 0 ? 0.01 * x : x }, /*leaky*/
+            relu_p : function(x, a){ return x < 0 ? (a || 0) * x : x }, /*prametric*/
+            relu_e : function(x, a){ return x < 0 ? (a || 0) * (Math.pow(Math.E, x) - 1) : x },/*exponent*/
+            sinc : function(x){ return x == 0 ? 1 : (Math.sin(x) / x); },
+            gauss : function(x){ return Math.pow(Math.E, Math.pow(-1 * x, 2)) }
+        }
+
     };
 
 
